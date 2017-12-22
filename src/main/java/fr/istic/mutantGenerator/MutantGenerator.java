@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.istic.classFinder.ClassLoader;
 import fr.istic.mutationTarget.MutationTarget;
+import javassist.CannotCompileException;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.NotFoundException;
@@ -34,6 +35,16 @@ public class MutantGenerator {
     		        }
     	        }
     	    }
+    	}
+    }
+    
+    public void mutateProjectForVoidMetho(List<MutationTarget> targets, String path, String mutantPath) throws NotFoundException, BadBytecode, IOException, CannotCompileException {
+        FileTools.copyFolderToFolder(path,"", path, mutantPath);
+        ClassLoader loader = new ClassLoader(mutantPath);
+    	for(MutationTarget target : targets) {
+    		CtClass ctclass = loader.getCtClass(target.getPackageName(), target.getCtClassName().replace(".class", ""));
+    		CtMethod ctMethod = loader.getMethodByName(ctclass, target.getCtMethodName());
+    		ctMethod.setBody("");    	    
     	}
     }
 }
