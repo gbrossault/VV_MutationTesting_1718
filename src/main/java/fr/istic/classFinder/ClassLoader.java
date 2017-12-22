@@ -10,18 +10,14 @@ public class ClassLoader {
 	private String path;
 	private ClassPool pool;
 	
-	public ClassLoader(String path) {
+	public ClassLoader(String path) throws NotFoundException {
 		this.path = path;
 		this.pool = ClassPool.getDefault();
-		try {
-			this.pool.appendClassPath(this.path);
-		} catch (NotFoundException e) {
-			e.printStackTrace();
-		}
+		this.pool.appendClassPath(this.path);
 	}
 	
-	public CtClass getCtClass(String className) throws NotFoundException{
-		CtClass ctClass = this.pool.get(className);
+	public CtClass getCtClass(String packageName, String className) throws NotFoundException{
+		CtClass ctClass = this.pool.get(packageName + "."+className);
 		return ctClass;
 	}
 	

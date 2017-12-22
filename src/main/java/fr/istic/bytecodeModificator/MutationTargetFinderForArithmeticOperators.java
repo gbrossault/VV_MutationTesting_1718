@@ -17,7 +17,7 @@ public class MutationTargetFinderForArithmeticOperators {
 				Map<Integer, Integer> methodContent = method.getContent();
 				for(Integer index : methodContent.keySet()) {
 					if(methodContent.get(index) == oldOperator) {
-    					MutationTarget target = new MutationTarget(dclass.getName(), method.getName(), index, methodContent.get(index), newOperator);
+    					MutationTarget target = new MutationTarget(dclass.getName(), dclass.getCorrespondingCtClass().getPackageName(), method.getName(), index, methodContent.get(index), newOperator);
     					targets.add(target);
 					}
 				}

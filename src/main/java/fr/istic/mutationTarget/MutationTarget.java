@@ -6,6 +6,7 @@ package fr.istic.mutationTarget;
 public class MutationTarget {
 
     private String ctClassName;
+    private String packageName;
     private String ctMethodName;
 
     //The index of the begin place where bytecode is modified.
@@ -14,8 +15,9 @@ public class MutationTarget {
     private Integer currentInstructions;
     private Integer mutatedInstructions;
 
-    public MutationTarget(String name, String methodName, Integer index, Integer currentInstructions, Integer mutatedInstructions) {
+    public MutationTarget(String name, String packageName, String methodName, Integer index, Integer currentInstructions, Integer mutatedInstructions) {
     	this.ctClassName = name;
+    	this.packageName = packageName;
         this.ctMethodName = methodName;
         this.targetIndex = index;
         this.currentInstructions = currentInstructions;
@@ -61,4 +63,12 @@ public class MutationTarget {
     public void setMutatedInstructions(Integer mutatedInstructions) {
         this.mutatedInstructions = mutatedInstructions;
     }
+
+	public String getPackageName() {
+		return this.packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
 }

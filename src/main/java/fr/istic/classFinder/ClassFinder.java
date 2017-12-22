@@ -23,7 +23,7 @@ import javassist.bytecode.MethodInfo;
 public class ClassFinder {
     private static final char PKG_SEPARATOR = '.';
     
-    private static final String PKG_TEST = ".test.";
+    private static final String PKG_TEST = ".test";
     //Represent the method
     private static final String CLASS_FILE_SUFFIX = ".class";
 

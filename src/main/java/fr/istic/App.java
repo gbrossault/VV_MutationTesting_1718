@@ -1,20 +1,16 @@
 package fr.istic;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import java.io.File;
-import java.net.URL;
 
 import fr.istic.bytecodeModificator.BytecodeElements;
 import fr.istic.bytecodeModificator.MutationTargetFinderForArithmeticOperators;
 import fr.istic.classFinder.ClassFinder;
-import fr.istic.classFinder.ClassLoader;
 import fr.istic.model.DummyClass;
-import fr.istic.model.DummyMethod;
+import fr.istic.mutantGenerator.FileTools;
+import fr.istic.mutantGenerator.MutantGenerator;
 import fr.istic.mutationTarget.MutationTarget;
-import fr.istic.testRunner.TestRunner;
-import javassist.CtClass;
-import javassist.bytecode.Mnemonic;
 
 /**
  * Hello world!
@@ -23,7 +19,7 @@ import javassist.bytecode.Mnemonic;
 public class App {
     public static void main( String[] args ) throws Exception {
         //Load classes
-    	String path = "/home/gbrossault/Documents/M2_ILA/Java_FX/My512/target/classes/model";
+    	String path = "/home/gbrossault/Documents/M2_ILA/Java_FX/My512";
         ClassFinder cf = new ClassFinder();
         List<DummyClass> classes = cf.findAllClasses(new File(path), path);
         
@@ -32,24 +28,15 @@ public class App {
         List<MutationTarget> targets = ao.findTarget(classes, BytecodeElements.IADD_OPERATOR, BytecodeElements.ISUB_OPERATOR);
         
         //Create mutant
-        
+        String mutantPath = "./resources/mutant/";
+        MutantGenerator mg = new MutantGenerator();
+        mg.mutateProjectForOperation(targets, path, mutantPath);
         
         //Execute test suit for mutant
-//        List<URL> urls = new ArrayList<URL>();
-//        for(DummyClass dclass : classes){
-//        	urls.add(new URL("file://"+dclass.getPath()+"/"));
-//        }
-//        TestRunner tr = new TestRunner(urls);
-//        for(DummyClass dclass : classes) {
-//        	if(dclass.isTestClass()) {
-//        		tr.runTests(dclass.getName().replace(".class", ""));
-//        	}
-//        }
+//        TestRunner testRunner = new TestRunner();
+//        testRunner.runTests(classes, path, mutantPath);
         
-        //Get reports
-    }
-    
-    public void createProjectCopy(String path) {
-    	
+        FileTools.deleteDirectoryContent(mutantPath);
+        System.out.println("end");
     }
 }
